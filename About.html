@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Falcare | Trusted House Helps & Nanny Agency</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="">
+
+<style>
+/* ===== IMAGE PATHS - CHANGE THESE TO YOUR OWN IMAGES ===== */
+:root {
+  --slide-image-1: url('assets/rec.jfif');
+  --slide-image-2: url('assets/rec.jfif');
+  --slide-image-3: url('assets/rec.jfif');
+  --slide-image-4: url('assets/rec.jfif');
+  --slide-image-5: url('assets/rec.jfif');
+  --slide-image-6: url('assets/rec.jfif');
+  --slide-image-7: url('assets/rec.jfif');
+}
+
+/* ===== SLIDESHOW STYLES ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #1e1e22;
+  overflow: hidden;
+  height: 100%;
+}
+
+#wrapper {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-absolute {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-position: center;
+  background-size: cover;
+}
+
+.slideshow {
+  position: relative;
+  color: #ffffff;
+  background-color: #1e1e22;
+  overflow: hidden;
+  height: 100vh;
+  min-height: 400px;
+}
+
+.slideshow__slide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  transition: visibility 0s 1.7s;
+}
+
+.slideshow__slide.is-current {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.slideshow__slide-background-load-wrap {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3d(0, 100%, 0);
+  overflow: hidden;
+}
+
+.is-loaded .slideshow__slide-background-load-wrap {
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0s;
+}
+
+.slideshow__slide.is-prev .slideshow__slide-background-parallax,
+.slideshow__slide.is-next .slideshow__slide-background-parallax {
+  transform: none !important;
+}
+
+.slideshow__slide-background-load {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3d(0, -50%, 0);
+}
+
+.is-loaded .slideshow__slide-background-load {
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide-background-wrap {
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide.is-prev .slideshow__slide-background-wrap {
+  transform: translate3d(0, -100%, 0);
+}
+
+.slideshow__slide.is-next .slideshow__slide-background-wrap {
+  transform: translate3d(0, 100%, 0);
+}
+
+.slideshow__slide-background {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.5s;
+  transform: scale(1);
+  overflow: hidden;
+}
+
+.slideshow__slide.is-prev .slideshow__slide-background,
+.slideshow__slide.is-next .slideshow__slide-background {
+  transform: scale(0.5);
+  transition-delay: 0s;
+}
+
+.slideshow__slide-image-wrap {
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide.is-prev .slideshow__slide-image-wrap {
+  transform: translate3d(0, 50%, 0);
+}
+
+.slideshow__slide-image {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.5s;
+  transform: scale(1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-position: center;
+  background-size: cover;
+}
+
+.slideshow__slide.is-prev .slideshow__slide-image,
+.slideshow__slide.is-next .slideshow__slide-image {
+  transform: scale(1.25);
+  transition-delay: 0s;
+}
+
+.slideshow__slide-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #1e1e22;
+  opacity: 0.35;
+}
+
+.slideshow__slide-image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom, transparent 0%, #1e1e22 100%);
+  opacity: 0.35;
+}
+
+.slideshow__slide-caption-text {
+  position: relative;
+  height: 100%;
+  padding-top: 25vh;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide.is-prev .slideshow__slide-caption-text {
+  transform: translate3d(0, -100%, 0);
+}
+
+.slideshow__slide.is-next .slideshow__slide-caption-text {
+  transform: translate3d(0, 100%, 0);
+}
+
+.slideshow__slide-caption {
+  position: relative;
+  height: 100%;
+  transform: translate3d(0, 100%, 0);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+.is-loaded .slideshow__slide-caption {
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide-caption-title {
+  line-height: 1.1;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .slideshow__slide-caption-title {
+    font-size: 5.625rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.slideshow__slide-caption-subtitle {
+  display: inline-block;
+  padding: 1.25rem 0;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+.slideshow__slide-caption-subtitle-label {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  display: inline-block;
+}
+
+.slideshow__slide-caption-subtitle:hover .slideshow__slide-caption-subtitle-label {
+  transform: translateX(20px);
+}
+
+.slideshow__slide-caption-subtitle::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  border-bottom: 1px solid #fff;
+  width: 1.5rem;
+  margin-right: 1.125rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center left;
+}
+
+.slideshow__slide-caption-subtitle.-load {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+  transform: translate3d(0, 3.75rem, 0);
+}
+
+.is-loaded .slideshow__slide-caption-subtitle.-load {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Container */
+.container {
+  position: relative;
+  margin: 0 auto;
+  padding-right: 40px;
+  padding-left: 40px;
+  max-width: 140rem;
+}
+
+@media (min-width: 700px) {
+  .container {
+    padding-right: 7.5rem;
+    padding-left: 7.5rem;
+  }
+}
+
+/* Controls */
+.c-header-home_footer {
+  z-index: 3;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.o-container {
+  position: relative;
+  margin: 0 auto;
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
+@media (min-width: 700px) {
+  .o-container {
+    padding-right: 7.5rem;
+    padding-left: 7.5rem;
+  }
+}
+
+.c-header-home_controls {
+  margin-left: 0;
+  letter-spacing: normal;
+  font-size: 0;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3d(0, 100%, 0);
+  padding-bottom: 40px;
+}
+
+@media (min-width: 700px) {
+  .c-header-home_controls {
+    padding-bottom: 5.625rem;
+    float: left;
+  }
+}
+
+.is-loaded .c-header-home_controls {
+  transform: translate3d(0, 0, 0);
+}
+
+.c-header-home_controls {
+  transition-delay: 0.65s;
+}
+
+.o-button-group {
+  margin-left: 0;
+  letter-spacing: normal;
+  font-size: 0;
+}
+
+.o-button {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid #ffffff;
+  white-space: nowrap;
+  font-size: 0;
+  cursor: pointer;
+  background: none;
+  color: inherit;
+  vertical-align: middle;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.075s;
+  height: 60px;
+  padding: 0 20px;
+  outline: 0;
+}
+
+@media (min-width: 700px) {
+  .o-button {
+    height: 3.75rem;
+    padding: 0 1.875rem;
+  }
+}
+
+.o-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  transform: scaleX(0);
+  transform-origin: center left;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.075s;
+}
+
+.o-button:hover::after {
+  transform: scaleX(1);
+  transition-delay: 0s;
+}
+
+.o-button:hover {
+  color: #000000;
+  transition-delay: 0s;
+}
+
+.o-button.-square {
+  padding: 0;
+  width: 60px;
+}
+
+@media (min-width: 700px) {
+  .o-button.-square {
+    width: 3.75rem;
+  }
+}
+
+.o-button-group .o-button + .o-button {
+  border-left: none;
+}
+
+.o-button_icon {
+  position: relative;
+  width: 1.1875rem;
+  height: 1.1875rem;
+  fill: #ffffff;
+  transition: fill 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.075s;
+}
+
+.o-button:hover .o-button_icon {
+  fill: #1e1e22;
+  transition-delay: 0s;
+}
+
+.o-button_label {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+}
+
+/* Pagination */
+.pagination {
+  position: absolute !important;
+  width: 100%;
+  text-align: center;
+  right: 0;
+  padding: 0 !important;
+  bottom: 100px;
+  z-index: 999;
+}
+
+@media (min-width: 700px) {
+  .pagination {
+    bottom: 110px;
+  }
+}
+
+.pagination .container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination__item {
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 0;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #fff;
+  margin: 0 5px;
+  transition: 0.2s ease-in-out;
+  border-radius: 50%;
+}
+
+.pagination__item.is-current,
+.pagination__item:hover {
+  background-color: #fff;
+}
+
+/* Falcare custom content */
+.slide-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  padding: 0.4rem 1.2rem;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.slide-description {
+  font-size: 1.1rem;
+  max-width: 520px;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin-bottom: 2rem;
+}
+
+.falcare-btn {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  background: #ffffff;
+  color: #1e1e22;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 40px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: 1px solid #ffffff;
+  margin-right: 0.8rem;
+}
+
+.falcare-btn:hover {
+  background: transparent;
+  color: #ffffff;
+}
+
+.falcare-btn.outline {
+  background: transparent;
+  color: #ffffff;
+}
+
+.falcare-btn.outline:hover {
+  background: #ffffff;
+  color: #1e1e22;
+}
+
+.slide-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+/* Stats & Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 600px;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-card {
+  text-align: center;
+  padding: 1.2rem;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.stat-card h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.stat-card span {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.center-content {
+  text-align: center;
+}
+
+.center-content .slide-description {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.story-card {
+  max-width: 600px;
+  padding: 2rem;
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.story-card p {
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.85;
+  margin-bottom: 0.8rem;
+}
+
+.story-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 500px;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 500px) {
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.value-card {
+  padding: 1.2rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.value-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.value-card p {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  max-width: 480px;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 500px) {
+  .team-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.team-card {
+  text-align: center;
+  padding: 1.2rem 0.8rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+}
+
+.team-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  margin: 0 auto 0.6rem;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.team-card h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.team-card span {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.credibility-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  max-width: 500px;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 500px) {
+  .credibility-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.credibility-card {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+
+.credibility-card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.credibility-card span {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* ===== SITE HEADER WITH LOGO ===== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 20px 0;
+  background: transparent;
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  pointer-events: auto;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  transition: opacity 0.3s ease;
+}
+
+.site-logo:hover {
+  opacity: 0.8;
+}
+
+.site-logo svg {
+  height: 80px;
+  width: auto;
+  display: block;
+}
+
+.site-logo-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-left: 10px;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 15px 0;
+  }
+  .site-logo svg {
+    height: 35px;
+  }
+  .site-logo-text {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: 12px 0;
+  }
+  .site-logo svg {
+    height: 28px;
+  }
+  .site-logo-text {
+    font-size: 0.9rem;
+    margin-left: 6px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- ===== SITE HEADER WITH LOGO - Links back to Homepage ===== -->
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="site-logo" aria-label="Falcare - Go to Homepage">
+      
+      <!-- Use your SVG file directly -->
+      <img src="assets/mum logo-08.svg" alt="Falcare" style="height:140px; width:auto;">
+      
+    </a>
+  </div>
+</header>
+
+<div id="wrapper">
+
+<section class="slideshow" id="js-header">
+
+  <!-- ===================================== -->
+  <!-- SLIDE 1 - HERO -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide is-current" data-slide="1">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 1: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-1);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Trusted House Helps & Nannies</span>
+          <h1 class="slideshow__slide-caption-title">Creating Better Homes Through Trusted Care</h1>
+          <p class="slide-description">Falcare connects families with dependable, thoroughly vetted house helps, nannies, caregivers and domestic professionals.</p>
+          <div class="slide-buttons">
+            <a href="workers.html" class="falcare-btn">Browse Workers</a>
+            <a href="contact.html" class="falcare-btn outline">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 2 - SOCIAL PROOF -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide is-next" data-slide="2">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 2: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-2);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container center-content js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Trusted By Families</span>
+          <h1 class="slideshow__slide-caption-title">Results That Speak For Themselves</h1>
+          <div class="stats-grid">
+            <div class="stat-card"><h2>500+</h2><span>Families Served</span></div>
+            <div class="stat-card"><h2>98%</h2><span>Client Satisfaction</span></div>
+            <div class="stat-card"><h2>100%</h2><span>Verified Workers</span></div>
+            <div class="stat-card"><h2>24/7</h2><span>Support Available</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 3 - OUR STORY -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="3">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 3: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-3);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container story-container js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <div class="story-card">
+            <span class="slide-tag">Our Story</span>
+            <h1 class="slideshow__slide-caption-title">Built On Trust</h1>
+            <p>Falcare was founded to simplify the process of finding dependable household support.</p>
+            <p>Through rigorous screening, professional standards and continuous support, we help families gain peace of mind while creating opportunities for skilled caregivers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 4 - VALUES -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="4">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 4: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-4);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Our Values</span>
+          <h1 class="slideshow__slide-caption-title">What Drives Everything We Do</h1>
+          <div class="values-grid">
+            <div class="value-card"><h3>Trust</h3><p>Carefully screened candidates.</p></div>
+            <div class="value-card"><h3>Safety</h3><p>Verification comes first.</p></div>
+            <div class="value-card"><h3>Care</h3><p>People always come first.</p></div>
+            <div class="value-card"><h3>Integrity</h3><p>Honest communication.</p></div>
+            <div class="value-card"><h3>Excellence</h3><p>Professional standards.</p></div>
+            <div class="value-card"><h3>Reliability</h3><p>Support you can trust.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 5 - TEAM -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="5">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 5: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-5);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Meet The Team</span>
+          <h1 class="slideshow__slide-caption-title">The People Behind Falcare</h1>
+          <div class="team-grid">
+            <div class="team-card"><div class="team-avatar"></div><h3>Sarah Mwangi</h3><span>Founder</span></div>
+            <div class="team-card"><div class="team-avatar"></div><h3>Kevin Otieno</h3><span>Recruitment Lead</span></div>
+            <div class="team-card"><div class="team-avatar"></div><h3>Grace Wanjiku</h3><span>Client Relations</span></div>
+            <div class="team-card"><div class="team-avatar"></div><h3>David Kimani</h3><span>Training Manager</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 6 - CREDIBILITY -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="6">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 6: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-6);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container center-content js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Proven Experience</span>
+          <h1 class="slideshow__slide-caption-title">Built On Real Results</h1>
+          <div class="credibility-grid">
+            <div class="credibility-card"><h2>10+</h2><span>Years Experience</span></div>
+            <div class="credibility-card"><h2>500+</h2><span>Placements</span></div>
+            <div class="credibility-card"><h2>98%</h2><span>Retention Rate</span></div>
+            <div class="credibility-card"><h2>24/7</h2><span>Support</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 7 - CTA -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="7">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 7: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-7);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container center-content js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Get Started</span>
+          <h1 class="slideshow__slide-caption-title">Ready To Find Trusted Household Support?</h1>
+          <p class="slide-description">Whether you need a nanny, caregiver, house help or domestic worker, Falcare is ready to help.</p>
+          <div class="slide-buttons">
+            <a href="contact.html" class="falcare-btn">Request Consultation</a>
+            <a href="workers.html" class="falcare-btn outline">View Workers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="c-header-home_footer">
+    <div class="o-container">
+      <div class="c-header-home_controls -nomobile o-button-group">
+        <div class="js-parallax" data-speed="1" data-position="top" data-target="#js-header">
+          <button class="o-button -white -square -left js-slider-home-button js-slider-home-prev" type="button">
+            <span class="o-button_label">
+              <svg class="o-button_icon" role="img"><use xlink:href="#arrow-prev"></use></svg>
+            </span>
+          </button>
+          <button class="o-button -white -square js-slider-home-button js-slider-home-next" type="button">
+            <span class="o-button_label">
+              <svg class="o-button_icon" role="img"><use xlink:href="#arrow-next"></use></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</div>
+
+<!-- SVG ICONS -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol viewBox="0 0 18 18" id="arrow-next">
+    <path d="M12.6,9L4,17.3L4.7,18l8.5-8.3l0,0L14,9l0,0l-0.7-0.7l0,0L4.7,0L4,0.7L12.6,9z"/>
+  </symbol>
+  <symbol viewBox="0 0 18 18" id="arrow-prev">
+    <path d="M14,0.7L13.3,0L4.7,8.3l0,0L4,9l0,0l0.7,0.7l0,0l8.5,8.3l0.7-0.7L5.4,9L14,0.7z"/>
+  </symbol>
+</svg>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+(function($) {
+  'use strict';
+
+  const $window = $(window);
+  const $body = $('body');
+
+  class Slideshow {
+    constructor(userOptions = {}) {
+      const defaultOptions = {
+        $el: $('.slideshow'),
+        showArrows: false,
+        showPagination: true,
+        duration: 8000,
+        autoplay: true
+      };
+
+      let options = Object.assign({}, defaultOptions, userOptions);
+
+      this.$el = options.$el;
+      this.maxSlide = this.$el.find('.js-slider-home-slide').length;
+      this.showArrows = this.maxSlide > 1 ? options.showArrows : false;
+      this.showPagination = options.showPagination;
+      this.currentSlide = 1;
+      this.isAnimating = false;
+      this.animationDuration = 1200;
+      this.autoplaySpeed = options.duration;
+      this.interval;
+      this.$controls = this.$el.find('.js-slider-home-button');
+      this.autoplay = this.maxSlide > 1 ? options.autoplay : false;
+
+      this.$el.on('click', '.js-slider-home-next', (event) => this.nextSlide());
+      this.$el.on('click', '.js-slider-home-prev', (event) => this.prevSlide());
+      this.$el.on('click', '.js-pagination-item', event => {
+        if (!this.isAnimating) {
+          this.preventClick();
+          this.goToSlide(parseInt(event.target.dataset.slide));
+        }
+      });
+
+      this.init();
+    }
+
+    init() {
+      this.goToSlide(1);
+      if (this.autoplay) {
+        this.startAutoplay();
+      }
+
+      if (this.showPagination) {
+        let paginationNumber = this.maxSlide;
+        let pagination = '<div class="pagination"><div class="container">';
+
+        for (let i = 0; i < this.maxSlide; i++) {
+          let item = `<span class="pagination__item js-pagination-item ${i === 0 ? 'is-current' : ''}" data-slide="${i + 1}">${i + 1}</span>`;
+          pagination = pagination + item;
+        }
+
+        pagination = pagination + '</div></div>';
+
+        this.$el.append(pagination);
+      }
+    }
+
+    preventClick() {
+      this.isAnimating = true;
+      this.$controls.prop('disabled', true);
+      clearInterval(this.interval);
+
+      setTimeout(() => {
+        this.isAnimating = false;
+        this.$controls.prop('disabled', false);
+        if (this.autoplay) {
+          this.startAutoplay();
+        }
+      }, this.animationDuration);
+    }
+
+    goToSlide(index) {
+      this.currentSlide = parseInt(index);
+
+      if (this.currentSlide > this.maxSlide) {
+        this.currentSlide = 1;
+      }
+
+      if (this.currentSlide === 0) {
+        this.currentSlide = this.maxSlide;
+      }
+
+      const newCurrent = this.$el.find('.js-slider-home-slide[data-slide="' + this.currentSlide + '"]');
+      const newPrev = this.currentSlide === 1 ? this.$el.find('.js-slider-home-slide').last() : newCurrent.prev('.js-slider-home-slide');
+      const newNext = this.currentSlide === this.maxSlide ? this.$el.find('.js-slider-home-slide').first() : newCurrent.next('.js-slider-home-slide');
+
+      this.$el.find('.js-slider-home-slide').removeClass('is-prev is-next is-current');
+      this.$el.find('.js-pagination-item').removeClass('is-current');
+
+      if (this.maxSlide > 1) {
+        newPrev.addClass('is-prev');
+        newNext.addClass('is-next');
+      }
+
+      newCurrent.addClass('is-current');
+      this.$el.find('.js-pagination-item[data-slide="' + this.currentSlide + '"]').addClass('is-current');
+    }
+
+    nextSlide() {
+      this.preventClick();
+      this.goToSlide(this.currentSlide + 1);
+    }
+
+    prevSlide() {
+      this.preventClick();
+      this.goToSlide(this.currentSlide - 1);
+    }
+
+    startAutoplay() {
+      this.interval = setInterval(() => {
+        if (!this.isAnimating) {
+          this.nextSlide();
+        }
+      }, this.autoplaySpeed);
+    }
+
+    destroy() {
+      this.$el.off();
+    }
+  }
+
+  (function() {
+    let loaded = false;
+    let maxLoad = 3000;
+
+    function load() {
+      const options = {
+        showPagination: true,
+        duration: 8000,
+        autoplay: true
+      };
+      let slideShow = new Slideshow(options);
+    }
+
+    function addLoadClass() {
+      $body.addClass('is-loaded');
+
+      setTimeout(function() {
+        $body.addClass('is-animated');
+      }, 600);
+    }
+
+    $window.on('load', function() {
+      if (!loaded) {
+        loaded = true;
+        load();
+      }
+    });
+
+    setTimeout(function() {
+      if (!loaded) {
+        loaded = true;
+        load();
+      }
+    }, maxLoad);
+
+    addLoadClass();
+  })();
+
+})(jQuery);
+</script>
+
+</body>
+</html>
