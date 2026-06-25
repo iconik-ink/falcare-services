@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available House Helps | Falcare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== CSS ===== */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: "Instrument Sans", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slider {
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      position: relative;
+    }
+
+    .slider__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 32px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .slider__logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .slider__logo img {
+      height: 50px;
+      width: auto;
+    }
+
+    .slider__menu {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: border-color 0.3s ease;
+      position: relative;
+      z-index: 100;
+    }
+
+    .slider__menu:hover {
+      border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .slider__menu span {
+      width: 18px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .slider__menu.active span:nth-child(1) {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .slider__menu.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .slider__menu.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+    .slider__label {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      display: none;
+    }
+
+    /* Mobile Menu Overlay */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 350px;
+      height: 100%;
+      background: rgba(20, 10, 30, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 50;
+      padding: 80px 40px 40px;
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mobile-menu.open {
+      right: 0;
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 49;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-menu .menu-item {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 18px;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: color 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .mobile-menu .menu-item:hover {
+      color: #CBA5ED;
+    }
+
+    .mobile-menu .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-menu .menu-highlight {
+      margin-top: auto;
+      padding: 16px 24px;
+      background: #6428B3;
+      border-radius: 12px;
+      color: white;
+      text-align: center;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .mobile-menu .menu-highlight:hover {
+      background: #53219a;
+    }
+
+    .slider__body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0 32px 40px;
+      min-height: 0;
+      position: relative;
+    }
+
+    .slider__left {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      z-index: 4;
+      padding-right: 20px;
+    }
+
+    .slider__title {
+      font-size: clamp(48px, 12vw, 160px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      overflow: hidden;
+      position: relative;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .slider__title span {
+      display: inline-block;
+      will-change: transform;
+    }
+
+    .slider__footer {
+      flex-shrink: 0;
+      margin-top: 24px;
+    }
+
+    .slider__info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slider__description {
+      font-size: 10px;
+      letter-spacing: 1.2px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      text-transform: uppercase;
+    }
+
+    .slider__location {
+      font-size: 10px;
+      letter-spacing: 1.2px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+      text-transform: uppercase;
+    }
+
+    .slider__right {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .slider__images {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .slider__slide {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      aspect-ratio: 0.8;
+      overflow: hidden;
+      will-change: transform, filter, opacity;
+      contain: layout style;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      z-index: 2;
+    }
+
+    .slider__slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .slider__slide:active img {
+      transform: scale(0.98);
+    }
+
+    .slider__slide .worker-details-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      color: white;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .slider__slide:hover .worker-details-overlay {
+      opacity: 1;
+    }
+
+    .worker-details-overlay .name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .worker-details-overlay .detail-row {
+      font-size: 12px;
+      opacity: 0.9;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .worker-details-overlay .detail-row span {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 2px 10px;
+      border-radius: 12px;
+    }
+
+    .slider__slide .book-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      padding: 8px 20px;
+      background: #6428B3;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: "Instrument Sans", sans-serif;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      pointer-events: auto;
+      text-decoration: none;
+      z-index: 2;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .slider__slide:hover .book-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slider__slide .book-btn:hover {
+      background: #53219a;
+      transform: scale(1.05) translateY(0);
+    }
+
+    .slider__counter {
+      position: fixed;
+      bottom: 40px;
+      right: 56px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+      letter-spacing: 1px;
+      font-weight: 300;
+      z-index: 10;
+      font-feature-settings: "tnum";
+    }
+
+    .slider__counter span {
+      font-size: 24px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      z-index: 5;
+      animation: bounce 2s infinite;
+      display: none;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    /* ===== DETAILS PAGE OVERLAY ===== */
+    .details-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .details-overlay.active {
+      display: flex;
+    }
+
+    .details-card {
+      background: white;
+      border-radius: 24px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .details-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 32px 16px;
+      border-bottom: 1px solid #f0edf5;
+      flex-shrink: 0;
+    }
+
+    .details-card-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      color: #2E1A40;
+    }
+
+    .close-details {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #f5f2fa;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .close-details:hover {
+      background: #e4daf0;
+      transform: rotate(90deg);
+    }
+
+    .details-body {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .details-body {
+        flex-direction: row;
+      }
+    }
+
+    .details-image {
+      flex: 1;
+      min-width: 200px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #e4daf0;
+    }
+
+    .details-image img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    @media (min-width: 768px) {
+      .details-image img {
+        height: 100%;
+        min-height: 400px;
+      }
+    }
+
+    .details-info {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .details-info .worker-id-badge {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 50px;
+      background: #f1ebf8;
+      color: #6428B3;
+      font-size: 13px;
+      font-weight: 600;
+      width: fit-content;
+    }
+
+    .details-info .worker-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #2E1A40;
+      margin: 0;
+    }
+
+    .details-info .status-badge {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 50px;
+      background: #e8fff0;
+      color: #11883a;
+      font-size: 13px;
+      font-weight: 500;
+      width: fit-content;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 24px;
+      margin-top: 4px;
+    }
+
+    .details-grid .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f5f2fa;
+    }
+
+    .details-grid .detail-item .label {
+      font-size: 10px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+
+    .details-grid .detail-item .value {
+      font-size: 15px;
+      color: #2E1A40;
+      font-weight: 500;
+    }
+
+    .details-book-btn {
+      margin-top: 8px;
+      padding: 14px 32px;
+      background: #6428B3;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+      text-align: center;
+    }
+
+    .details-book-btn:hover {
+      background: #53219a;
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 767px) {
+      .details-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 16px;
+      }
+      
+      .details-grid .detail-item {
+        padding: 6px 0;
+      }
+      
+      .details-grid .detail-item .value {
+        font-size: 14px;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      .slider__header {
+        padding: 32px 56px;
+      }
+
+      .slider__label {
+        display: flex;
+      }
+
+      .slider__body {
+        padding: 0 56px 56px;
+      }
+
+      .slider__footer {
+        margin-top: 32px;
+      }
+
+      .slider__slide {
+        width: 55%;
+        aspect-ratio: 0.75;
+      }
+
+      .slider__title {
+        font-size: clamp(64px, 15vw, 200px);
+      }
+
+      .slider__menu {
+        display: none !important;
+      }
+
+      .scroll-indicator {
+        display: block;
+      }
+
+      .mobile-menu,
+      .mobile-menu-overlay {
+        display: none !important;
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      .slider__body {
+        flex-direction: row;
+      }
+
+      .slider__left {
+        width: 50%;
+        flex-shrink: 0;
+        z-index: auto;
+        padding-right: 40px;
+      }
+
+      .slider__right {
+        position: static;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 0;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .slider__slide {
+        width: 65%;
+        aspect-ratio: 0.7;
+      }
+
+      .slider__counter {
+        bottom: 56px;
+        right: 56px;
+      }
+
+      .slider__menu {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .slider__menu {
+        display: flex !important;
+      }
+      
+      .slider__slide {
+        width: 60%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .slider__slide,
+      .slider__title span {
+        will-change: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Slider Section -->
+  <section class="slider" id="slider">
+    <div class="slider__header">
+      <a href="/" class="slider__logo">
+        <img src="assets/mum logo-08.svg" alt="Falcare" style="height:50px; width:auto;">
+        <span>Falcare</span>
+      </a>
+      <button class="slider__menu" id="menuBtn" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <span class="slider__label">AVAILABLE WORKERS</span>
+    </div>
+
+    <div class="slider__body">
+      <div class="slider__left">
+        <h2 class="slider__title" aria-live="polite"></h2>
+        <div class="slider__footer">
+          <div class="slider__info">
+            <p class="slider__description">TRUSTED DOMESTIC PROFESSIONALS<br>VERIFIED FOR YOUR HOME</p>
+            <p class="slider__location">SCROLL TO EXPLORE<br>AVAILABLE WORKERS</p>
+          </div>
+        </div>
+      </div>
+      <div class="slider__right">
+        <div class="slider__images"></div>
+      </div>
+    </div>
+    <div class="slider__counter">
+      <span id="currentCount">1</span> / <span id="totalCount">100</span>
+    </div>
+  </section>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="menuOverlay"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" class="menu-item">🏠 Home</a>
+    <a href="#" class="menu-item">👩‍🍳 Available Workers</a>
+    <a href="#" class="menu-item">📋 My Bookings</a>
+    <a href="#" class="menu-item">⭐ Reviews</a>
+    <a href="#" class="menu-item">📞 Contact Us</a>
+    <a href="#" class="menu-highlight">Post a Job</a>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator" id="scrollIndicator">↓ Scroll to browse ↓</div>
+
+  <!-- Details Page Overlay -->
+  <div class="details-overlay" id="detailsOverlay">
+    <div class="details-card">
+      <div class="details-card-header">
+        <h2>Worker Details</h2>
+        <button class="close-details" id="closeDetails">✕</button>
+      </div>
+      <div class="details-body" id="detailsBody">
+        <!-- Populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+  <script>
+    // ===== JavaScript =====
+    const throttle = (callback, limit) => {
+      let waiting = false;
+      return function () {
+        if (!waiting) {
+          callback.apply(this, arguments);
+          waiting = true;
+          setTimeout(() => {
+            waiting = false;
+          }, limit);
+        }
+      };
+    };
+
+    const debounce = (func, wait, immediate) => {
+      let timeout;
+      return function () {
+        const context = this;
+        const args = arguments;
+        const later = function () {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
+    };
+
+    // Generate 100 workers with diverse data
+    const generateWorkers = () => {
+      const tribes = ['Luhya', 'Kikuyu', 'Luo', 'Kamba', 'Meru', 'Kisii', 'Mijikenda', 'Taita', 'Turkana', 'Maasai'];
+      const locations = ['Nairobi', 'Kiambu', 'Thika', 'Nakuru', 'Eldoret', 'Kisumu', 'Mombasa', 'Machakos', 'Kajiado', 'Ruiru'];
+      const religions = ['Christian', 'Muslim', 'Hindu', 'Traditional'];
+      const education = ['K.C.S.E', 'Diploma', 'Certificate', 'Primary', 'College', 'University'];
+      const experience = ['1-2 Years', '3-5 Years', '5+ Years', '2-3 Years', '7+ Years'];
+      const salaries = ['KES 8,000', 'KES 10,000', 'KES 12,000', 'KES 15,000', 'KES 18,000', 'KES 20,000'];
+      const languages = ['English & Kiswahili', 'English & Kikuyu', 'English & Luo', 'English & Luhya', 'English, Kiswahili & Kikuyu', 'English, Kiswahili & Luo'];
+      
+      const names = [
+        'Grace Akinyi', 'Mary Wanjiru', 'Sarah Kemunto', 'Jane Nyambura', 
+        'Faith Achieng', 'Esther Muthoni', 'Ruth Akoth', 'Margaret Wambui', 
+        'Anne Akinyi', 'Susan Mueni', 'Catherine Chepkirui', 'Helen Wanjiru',
+        'Rose Auma', 'Mercy Mwende', 'Joyce Muthoni', 'Lydia Akinyi',
+        'Patricia Kamene', 'Diana Chebet', 'Monica Kemunto', 'Christine Naliaka',
+        'Phyllis Wangari', 'Felister Achieng', 'Agnes Mumbua', 'Bridget Adhiambo',
+        'Caroline Muthoni', 'Dorcas Wairimu', 'Edith Mueni', 'Florence Akoth'
+      ];
+
+      const workers = [];
+      for (let i = 3001; i <= 3100; i++) {
+        const name = names[i % names.length] || `Worker ${i}`;
+        const tribe = tribes[i % tribes.length];
+        const location = locations[i % locations.length];
+        workers.push({
+          id: i,
+          name: name,
+          status: i % 8 === 0 ? 'On Leave' : 'Available',
+          tribe: tribe,
+          religion: religions[i % religions.length],
+          age: 25 + (i % 20),
+          education: education[i % education.length],
+          language: languages[i % languages.length],
+          experience: experience[i % experience.length],
+          location: location,
+          salary: salaries[i % salaries.length],
+          contact: `07${Math.floor(10000000 + Math.random() * 90000000)}`,
+          email: `${name.toLowerCase().replace(' ', '.')}@falcare.co.ke`,
+          image: `https://images.unsplash.com/photo-${[
+            '1573496359142-b8d87734a5a2',
+            '1580618672591-eb180b1a973f',
+            '1573497620373-6e3f343e7b0b',
+            '1567532939600-4f5f60d0b27f',
+            '1573496359142-b8d87734a5a2',
+            '1580618672591-eb180b1a973f',
+            '1573497620373-6e3f343e7b0b',
+            '1567532939600-4f5f60d0b27f'
+          ][i % 8]}?w=600&q=80`,
+          fallbackImage: `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48cmVjdCB3aWR0aD0iODAiIGhlaWdodD0iODAiIGZpbGw9IiM2NDI4QjMiLz48dGV4dCB4PSIxMCIgeT0iNTAiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0iQXJpYWwiPkhIPC90ZXh0Pjwvc3ZnPg==`
+        });
+      }
+      return workers;
+    };
+
+    const SLIDES = generateWorkers();
+    const AUTOPLAY_DELAY = 4000;
+
+    class Slider {
+      constructor() {
+        this.current = 0;
+        this.animating = false;
+        this.total = SLIDES.length;
+        this.el = document.querySelector(".slider");
+        this.titleEl = document.querySelector(".slider__title");
+        this.imagesEl = document.querySelector(".slider__images");
+        this.slideEls = [];
+        this.currentLine = null;
+        this.autoPlayId = null;
+        this.reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        this.currentCountEl = document.getElementById('currentCount');
+        this.totalCountEl = document.getElementById('totalCount');
+        this.scrollIndicator = document.getElementById('scrollIndicator');
+
+        // Menu elements
+        this.menuBtn = document.getElementById('menuBtn');
+        this.mobileMenu = document.getElementById('mobileMenu');
+        this.menuOverlay = document.getElementById('menuOverlay');
+        this.isMenuOpen = false;
+
+        // Details page elements
+        this.detailsOverlay = document.getElementById('detailsOverlay');
+        this.detailsBody = document.getElementById('detailsBody');
+        this.closeDetailsBtn = document.getElementById('closeDetails');
+
+        // Scroll tracking
+        this.scrollAccumulator = 0;
+        this.scrollThreshold = 80;
+        this.scrollCooldown = false;
+
+        // Touch tracking for click/tap detection
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.touchMoved = false;
+
+        if (this.totalCountEl) {
+          this.totalCountEl.textContent = this.total;
+        }
+
+        this.preload();
+        this.setTitle(SLIDES[0].name);
+        const firstColor = this.getWorkerColor(SLIDES[0]);
+        gsap.set(this.el, { backgroundColor: firstColor });
+        this.buildCarousel();
+        this.bind();
+        this.startAutoPlay();
+        this.updateCounter();
+        this.setupDetailsPage();
+        this.setupMobileMenu();
+
+        // Hide scroll indicator after a few seconds
+        setTimeout(() => {
+          if (this.scrollIndicator) {
+            this.scrollIndicator.style.opacity = '0';
+            setTimeout(() => {
+              if (this.scrollIndicator) {
+                this.scrollIndicator.style.display = 'none';
+              }
+            }, 500);
+          }
+        }, 6000);
+      }
+
+      getWorkerColor(worker) {
+        const colors = [
+          '#2C1810', '#1a1a2e', '#16213e', '#0f3460',
+          '#1B4332', '#2d3436', '#3d2c1f', '#4a2c2c'
+        ];
+        return colors[worker.id % colors.length];
+      }
+
+      preload() {
+        SLIDES.forEach((s) => {
+          const img = new Image();
+          img.src = s.image;
+          img.onerror = () => {
+            img.src = s.fallbackImage;
+          };
+        });
+      }
+
+      mod(n) {
+        return ((n % this.total) + this.total) % this.total;
+      }
+
+      startAutoPlay() {
+        this.stopAutoPlay();
+        this.autoPlayId = setInterval(() => {
+          if (!this.animating) this.go("next");
+        }, AUTOPLAY_DELAY);
+      }
+
+      stopAutoPlay() {
+        if (this.autoPlayId) {
+          clearInterval(this.autoPlayId);
+          this.autoPlayId = null;
+        }
+      }
+
+      setTitle(text) {
+        this.titleEl.innerHTML = "";
+        const line = document.createElement("div");
+        [...text].forEach((ch) => {
+          const span = document.createElement("span");
+          span.textContent = ch === " " ? "\u00A0" : ch;
+          line.appendChild(span);
+        });
+        this.titleEl.appendChild(line);
+        this.currentLine = line;
+      }
+
+      animateTitle(newText, direction) {
+        const h = this.titleEl.offsetHeight;
+        const dir = direction === "next" ? 1 : -1;
+        const oldLine = this.currentLine;
+        const oldChars = [...oldLine.querySelectorAll("span")];
+
+        if (h === 0) {
+          this.setTitle(newText);
+          return gsap.timeline();
+        }
+
+        this.titleEl.style.height = h + "px";
+        oldLine.style.cssText = "position:absolute;top:0;left:0;width:100%";
+
+        const newLine = document.createElement("div");
+        newLine.style.cssText = "position:absolute;top:0;left:0;width:100%";
+        [...newText].forEach((ch) => {
+          const span = document.createElement("span");
+          span.textContent = ch === " " ? "\u00A0" : ch;
+          newLine.appendChild(span);
+        });
+        this.titleEl.appendChild(newLine);
+
+        const newChars = [...newLine.querySelectorAll("span")];
+        gsap.set(newChars, { y: h * dir });
+
+        const duration = this.reducedMotion ? 0.01 : 1;
+        const stagger = this.reducedMotion ? 0 : 0.04;
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            oldLine.remove();
+            newLine.style.cssText = "";
+            gsap.set(newChars, { clearProps: "all" });
+            this.titleEl.style.height = "";
+            this.currentLine = newLine;
+          }
+        });
+
+        tl.to(
+          oldChars,
+          {
+            y: -h * dir,
+            stagger: stagger,
+            duration: duration,
+            ease: "expo.inOut"
+          },
+          0
+        );
+
+        tl.to(
+          newChars,
+          {
+            y: 0,
+            stagger: stagger,
+            duration: duration,
+            ease: "expo.inOut"
+          },
+          0
+        );
+
+        return tl;
+      }
+
+      makeSlide(idx) {
+        const worker = SLIDES[idx];
+        const div = document.createElement("div");
+        div.className = "slider__slide";
+        div.dataset.workerId = worker.id;
+        
+        const img = document.createElement("img");
+        img.src = worker.image;
+        img.alt = worker.name;
+        img.width = 600;
+        img.height = 800;
+        img.draggable = false;
+        img.onerror = () => {
+          img.src = worker.fallbackImage;
+        };
+        div.appendChild(img);
+
+        // Worker details overlay
+        const overlay = document.createElement("div");
+        overlay.className = "worker-details-overlay";
+        overlay.innerHTML = `
+          <div class="name">${worker.name}</div>
+          <div class="detail-row">
+            <span>${worker.tribe}</span>
+            <span>${worker.age} yrs</span>
+            <span>${worker.location}</span>
+          </div>
+          <div class="detail-row">
+            <span>${worker.experience}</span>
+            <span>${worker.salary}</span>
+          </div>
+        `;
+        div.appendChild(overlay);
+
+        // Book button
+        const bookBtn = document.createElement("a");
+        bookBtn.className = "book-btn";
+        bookBtn.textContent = "Book Now";
+        bookBtn.href = "#";
+        bookBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.showDetails(worker.id);
+        });
+        div.appendChild(bookBtn);
+
+        // Click/tap on slide opens details
+        div.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          // Only trigger if not a drag/swipe
+          if (!this.touchMoved) {
+            this.showDetails(worker.id);
+          }
+          this.touchMoved = false;
+        });
+
+        return div;
+      }
+
+      getSlideProps(step) {
+        const h = this.imagesEl.offsetHeight || window.innerHeight * 0.6;
+        const absStep = Math.abs(step);
+        const positions = [
+          { x: -0.35, y: -0.95, rot: -30, s: 1.35, b: 16, o: 0 },
+          { x: -0.18, y: -0.5, rot: -15, s: 1.15, b: 8, o: 0.55 },
+          { x: 0, y: 0, rot: 0, s: 1, b: 0, o: 1 },
+          { x: -0.06, y: 0.5, rot: 15, s: 0.75, b: 6, o: 0.55 },
+          { x: -0.12, y: 0.95, rot: 30, s: 0.55, b: 14, o: 0 }
+        ];
+        const idx = Math.max(0, Math.min(4, step + 2));
+        const p = positions[idx];
+
+        return {
+          x: p.x * h,
+          y: p.y * h,
+          rotation: p.rot,
+          scale: p.s,
+          blur: p.b,
+          opacity: p.o,
+          zIndex: absStep === 0 ? 3 : absStep === 1 ? 2 : 1
+        };
+      }
+
+      positionSlide(slide, step) {
+        const props = this.getSlideProps(step);
+        gsap.set(slide, {
+          xPercent: -50,
+          yPercent: -50,
+          x: props.x,
+          y: props.y,
+          rotation: props.rotation,
+          scale: props.scale,
+          opacity: props.opacity,
+          filter: "blur(" + props.blur + "px)",
+          zIndex: props.zIndex
+        });
+      }
+
+      buildCarousel() {
+        if (!this.imagesEl || this.imagesEl.offsetHeight === 0) return;
+        this.imagesEl.innerHTML = "";
+        this.slideEls = [];
+
+        for (let step = -1; step <= 1; step++) {
+          const idx = this.mod(this.current + step);
+          const slide = this.makeSlide(idx);
+          this.imagesEl.appendChild(slide);
+          this.positionSlide(slide, step);
+          this.slideEls.push({ el: slide, step: step });
+        }
+      }
+
+      animateCarousel(direction) {
+        if (!this.imagesEl || this.imagesEl.offsetHeight === 0)
+          return gsap.timeline();
+
+        const shift = direction === "next" ? -1 : 1;
+        const enterStep = direction === "next" ? 2 : -2;
+        const newIdx =
+          direction === "next"
+            ? this.mod(this.current + 2)
+            : this.mod(this.current - 2);
+
+        const newSlide = this.makeSlide(newIdx);
+        this.imagesEl.appendChild(newSlide);
+        this.positionSlide(newSlide, enterStep);
+        this.slideEls.push({ el: newSlide, step: enterStep });
+
+        this.slideEls.forEach((s) => {
+          s.step += shift;
+        });
+
+        const duration = this.reducedMotion ? 0.01 : 1.2;
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            this.slideEls = this.slideEls.filter((s) => {
+              if (Math.abs(s.step) >= 2) {
+                s.el.remove();
+                return false;
+              }
+              return true;
+            });
+          }
+        });
+
+        this.slideEls.forEach((s) => {
+          const props = this.getSlideProps(s.step);
+          s.el.style.zIndex = props.zIndex;
+
+          tl.to(
+            s.el,
+            {
+              x: props.x,
+              y: props.y,
+              rotation: props.rotation,
+              scale: props.scale,
+              opacity: props.opacity,
+              filter: "blur(" + props.blur + "px)",
+              duration: duration,
+              ease: "power3.inOut"
+            },
+            0
+          );
+        });
+
+        return tl;
+      }
+
+      updateCounter() {
+        if (this.currentCountEl) {
+          this.currentCountEl.textContent = this.current + 1;
+        }
+      }
+
+      go(direction) {
+        if (this.animating) return;
+        this.animating = true;
+        this.startAutoPlay();
+
+        const nextIdx =
+          direction === "next"
+            ? this.mod(this.current + 1)
+            : this.mod(this.current - 1);
+
+        const master = gsap.timeline({
+          onComplete: () => {
+            this.current = nextIdx;
+            this.animating = false;
+            this.updateCounter();
+          }
+        });
+
+        const nextColor = this.getWorkerColor(SLIDES[nextIdx]);
+        master.to(
+          this.el,
+          {
+            backgroundColor: nextColor,
+            duration: this.reducedMotion ? 0.01 : 1.2,
+            ease: "power2.inOut"
+          },
+          0
+        );
+
+        master.add(this.animateTitle(SLIDES[nextIdx].name, direction), 0);
+        master.add(this.animateCarousel(direction), 0);
+      }
+
+      // ===== MOBILE MENU =====
+      setupMobileMenu() {
+        this.menuBtn.addEventListener('click', () => {
+          this.toggleMenu();
+        });
+
+        this.menuOverlay.addEventListener('click', () => {
+          this.closeMenu();
+        });
+
+        this.mobileMenu.querySelectorAll('.menu-item, .menu-highlight').forEach(link => {
+          link.addEventListener('click', () => {
+            this.closeMenu();
+          });
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.isMenuOpen) {
+            this.closeMenu();
+          }
+        });
+      }
+
+      toggleMenu() {
+        this.isMenuOpen ? this.closeMenu() : this.openMenu();
+      }
+
+      openMenu() {
+        this.isMenuOpen = true;
+        this.mobileMenu.classList.add('open');
+        this.menuOverlay.classList.add('active');
+        this.menuBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      closeMenu() {
+        this.isMenuOpen = false;
+        this.mobileMenu.classList.remove('open');
+        this.menuOverlay.classList.remove('active');
+        this.menuBtn.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      // ===== DETAILS PAGE METHODS =====
+      setupDetailsPage() {
+        this.closeDetailsBtn.addEventListener('click', () => {
+          this.hideDetails();
+        });
+
+        this.detailsOverlay.addEventListener('click', (e) => {
+          if (e.target === this.detailsOverlay) {
+            this.hideDetails();
+          }
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.detailsOverlay.classList.contains('active')) {
+            this.hideDetails();
+          }
+        });
+      }
+
+      showDetails(workerId) {
+        const worker = SLIDES.find(w => w.id === workerId);
+        if (!worker) return;
+
+        // Build details content - matching the image design
+        this.detailsBody.innerHTML = `
+          <div class="details-image">
+            <img src="${worker.image}" alt="${worker.name}" onerror="this.src='${worker.fallbackImage}'">
+          </div>
+          <div class="details-info">
+            <span class="worker-id-badge">Maid ${worker.id}</span>
+            <div class="worker-name">${worker.name}</div>
+            <span class="status-badge">${worker.status}</span>
+            <div class="details-grid">
+              <div class="detail-item">
+                <span class="label">Tribe</span>
+                <span class="value">${worker.tribe}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Religion</span>
+                <span class="value">${worker.religion}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Age</span>
+                <span class="value">${worker.age} years</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Education</span>
+                <span class="value">${worker.education}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Languages</span>
+                <span class="value">${worker.language}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Experience</span>
+                <span class="value">${worker.experience}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Location</span>
+                <span class="value">${worker.location}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Salary</span>
+                <span class="value">${worker.salary}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Contact</span>
+                <span class="value">${worker.contact}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Email</span>
+                <span class="value">${worker.email}</span>
+              </div>
+            </div>
+            <button class="details-book-btn" onclick="alert('Booking request sent for ${worker.name} (ID: ${worker.id})')">
+              Book This Worker
+            </button>
+          </div>
+        `;
+
+        this.detailsOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // Stop autoplay when details are open
+        this.stopAutoPlay();
+      }
+
+      hideDetails() {
+        this.detailsOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        // Resume autoplay
+        this.startAutoPlay();
+      }
+
+      // ===== SCROLL HANDLING =====
+      handleScroll(deltaY) {
+        if (this.animating || this.scrollCooldown) return;
+        
+        this.scrollAccumulator += deltaY;
+        
+        if (Math.abs(this.scrollAccumulator) >= this.scrollThreshold) {
+          const direction = this.scrollAccumulator > 0 ? 'next' : 'prev';
+          this.scrollAccumulator = 0;
+          this.scrollCooldown = true;
+          
+          this.go(direction);
+          
+          setTimeout(() => {
+            this.scrollCooldown = false;
+          }, 1000);
+        }
+      }
+
+      bind() {
+        // Wheel scroll
+        const onWheel = (e) => {
+          e.preventDefault();
+          this.handleScroll(e.deltaY);
+        };
+        window.addEventListener("wheel", onWheel, { passive: false });
+
+        // Touch handling - separate swipe from tap
+        let touchStartY = 0;
+        let touchAccumulator = 0;
+        
+        window.addEventListener(
+          "touchstart",
+          (e) => {
+            this.touchStartX = e.touches[0].clientX;
+            this.touchStartY = e.touches[0].clientY;
+            this.touchMoved = false;
+            touchAccumulator = 0;
+          },
+          { passive: true }
+        );
+
+        const onTouchMove = (e) => {
+          const deltaX = Math.abs(e.touches[0].clientX - this.touchStartX);
+          const deltaY = Math.abs(e.touches[0].clientY - this.touchStartY);
+          
+          if (deltaX > 10 || deltaY > 10) {
+            this.touchMoved = true;
+          }
+          
+          const deltaYScroll = this.touchStartY - e.touches[0].clientY;
+          touchAccumulator += deltaYScroll;
+          this.touchStartY = e.touches[0].clientY;
+          
+          if (Math.abs(touchAccumulator) >= this.scrollThreshold * 0.5 && !this.animating) {
+            const direction = touchAccumulator > 0 ? 'next' : 'prev';
+            touchAccumulator = 0;
+            this.go(direction);
+          }
+        };
+        window.addEventListener("touchmove", onTouchMove, { passive: true });
+
+        // Keyboard navigation
+        window.addEventListener("keydown", (e) => {
+          if (this.animating) return;
+          if (e.key === "ArrowDown" || e.key === "ArrowRight") this.go("next");
+          if (e.key === "ArrowUp" || e.key === "ArrowLeft") this.go("prev");
+        });
+
+        const onResize = debounce(() => {
+          if (!this.animating && this.imagesEl.offsetHeight > 0) {
+            this.slideEls.forEach((s) => {
+              this.positionSlide(s.el, s.step);
+            });
+          }
+        }, 300);
+        window.addEventListener("resize", onResize, { passive: true });
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "hidden") {
+            this.animating = false;
+            this.stopAutoPlay();
+          } else {
+            this.startAutoPlay();
+          }
+        });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      new Slider();
+    });
+  </script>
+</body>
+</html>
