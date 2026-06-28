@@ -6,6 +6,8 @@
   <title>Available House Helps | Falcare</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ===== CSS ===== */
@@ -267,6 +269,7 @@
       width: 100%;
       height: 100%;
       position: relative;
+      touch-action: none;
     }
 
     .slider__slide {
@@ -283,7 +286,8 @@
       cursor: pointer;
       pointer-events: auto;
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
       z-index: 2;
     }
 
@@ -291,14 +295,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
       pointer-events: none;
       -webkit-user-select: none;
       user-select: none;
       -webkit-touch-callout: none;
     }
 
-    .slider__slide:active img {
+    .slider__slide:active {
       transform: scale(0.98);
     }
 
@@ -359,7 +362,6 @@
       text-decoration: none;
       z-index: 2;
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
     }
 
     .slider__slide:hover .book-btn {
@@ -390,7 +392,6 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
-    /* Scroll indicator */
     .scroll-indicator {
       position: fixed;
       bottom: 100px;
@@ -406,15 +407,9 @@
     }
 
     @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateX(-50%) translateY(0);
-      }
-      40% {
-        transform: translateX(-50%) translateY(-10px);
-      }
-      60% {
-        transform: translateX(-50%) translateY(-5px);
-      }
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
     }
 
     /* ===== DETAILS PAGE OVERLAY ===== */
@@ -451,14 +446,8 @@
     }
 
     @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .details-card-header {
@@ -504,9 +493,7 @@
     }
 
     @media (min-width: 768px) {
-      .details-body {
-        flex-direction: row;
-      }
+      .details-body { flex-direction: row; }
     }
 
     .details-image {
@@ -622,114 +609,42 @@
         grid-template-columns: 1fr 1fr;
         gap: 8px 16px;
       }
-      
-      .details-grid .detail-item {
-        padding: 6px 0;
-      }
-      
-      .details-grid .detail-item .value {
-        font-size: 14px;
-      }
+      .details-grid .detail-item { padding: 6px 0; }
+      .details-grid .detail-item .value { font-size: 14px; }
     }
 
     @media screen and (min-width: 768px) {
-      .slider__header {
-        padding: 32px 56px;
-      }
-
-      .slider__label {
-        display: flex;
-      }
-
-      .slider__body {
-        padding: 0 56px 56px;
-      }
-
-      .slider__footer {
-        margin-top: 32px;
-      }
-
-      .slider__slide {
-        width: 55%;
-        aspect-ratio: 0.75;
-      }
-
-      .slider__title {
-        font-size: clamp(64px, 15vw, 200px);
-      }
-
-      .slider__menu {
-        display: none !important;
-      }
-
-      .scroll-indicator {
-        display: block;
-      }
-
-      .mobile-menu,
-      .mobile-menu-overlay {
-        display: none !important;
-      }
+      .slider__header { padding: 32px 56px; }
+      .slider__label { display: flex; }
+      .slider__body { padding: 0 56px 56px; }
+      .slider__footer { margin-top: 32px; }
+      .slider__slide { width: 55%; aspect-ratio: 0.75; }
+      .slider__title { font-size: clamp(64px, 15vw, 200px); }
+      .slider__menu { display: none !important; }
+      .scroll-indicator { display: block; }
+      .mobile-menu, .mobile-menu-overlay { display: none !important; }
     }
 
     @media screen and (min-width: 1024px) {
-      .slider__body {
-        flex-direction: row;
-      }
-
-      .slider__left {
-        width: 50%;
-        flex-shrink: 0;
-        z-index: auto;
-        padding-right: 40px;
-      }
-
-      .slider__right {
-        position: static;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 0;
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .slider__slide {
-        width: 65%;
-        aspect-ratio: 0.7;
-      }
-
-      .slider__counter {
-        bottom: 56px;
-        right: 56px;
-      }
-
-      .slider__menu {
-        display: none !important;
-      }
+      .slider__body { flex-direction: row; }
+      .slider__left { width: 50%; flex-shrink: 0; z-index: auto; padding-right: 40px; }
+      .slider__right { position: static; flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; opacity: 1; pointer-events: auto; }
+      .slider__slide { width: 65%; aspect-ratio: 0.7; }
+      .slider__counter { bottom: 56px; right: 56px; }
+      .slider__menu { display: none !important; }
     }
 
     @media (max-width: 767px) {
-      .slider__menu {
-        display: flex !important;
-      }
-      
-      .slider__slide {
-        width: 60%;
-      }
+      .slider__menu { display: flex !important; }
+      .slider__slide { width: 60%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .slider__slide,
-      .slider__title span {
-        will-change: auto;
-      }
+      .slider__slide, .slider__title span { will-change: auto; }
     }
   </style>
 </head>
 <body>
-  <!-- Slider Section -->
   <section class="slider" id="slider">
     <div class="slider__header">
       <a href="/" class="slider__logo">
@@ -755,7 +670,7 @@
         </div>
       </div>
       <div class="slider__right">
-        <div class="slider__images"></div>
+        <div class="slider__images" id="imagesContainer"></div>
       </div>
     </div>
     <div class="slider__counter">
@@ -763,10 +678,7 @@
     </div>
   </section>
 
-  <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="menuOverlay"></div>
-
-  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#" class="menu-item">🏠 Home</a>
     <a href="#" class="menu-item">👩‍🍳 Available Workers</a>
@@ -776,55 +688,50 @@
     <a href="#" class="menu-highlight">Post a Job</a>
   </div>
 
-  <!-- Scroll indicator -->
   <div class="scroll-indicator" id="scrollIndicator">↓ Scroll to browse ↓</div>
 
-  <!-- Details Page Overlay -->
   <div class="details-overlay" id="detailsOverlay">
     <div class="details-card">
       <div class="details-card-header">
         <h2>Worker Details</h2>
         <button class="close-details" id="closeDetails">✕</button>
       </div>
-      <div class="details-body" id="detailsBody">
-        <!-- Populated by JavaScript -->
-      </div>
+      <div class="details-body" id="detailsBody"></div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
   <script>
-    // ===== JavaScript =====
-    const throttle = (callback, limit) => {
+    // ============================================================
+    //  SLIDER WITH EVENT DELEGATION
+    //  - Single click/touch listener on the container
+    //  - No per-card listeners
+    //  - Reliable mobile taps
+    //  - Cleaner, faster, less memory
+    // ============================================================
+
+    // ---- helpers ----
+    const throttle = (fn, limit) => {
       let waiting = false;
-      return function () {
+      return function(...args) {
         if (!waiting) {
-          callback.apply(this, arguments);
+          fn.apply(this, args);
           waiting = true;
-          setTimeout(() => {
-            waiting = false;
-          }, limit);
+          setTimeout(() => { waiting = false; }, limit);
         }
       };
     };
 
-    const debounce = (func, wait, immediate) => {
+    const debounce = (fn, wait) => {
       let timeout;
-      return function () {
-        const context = this;
-        const args = arguments;
-        const later = function () {
-          timeout = null;
-          if (!immediate) func.apply(context, args);
-        };
-        const callNow = immediate && !timeout;
+      return function(...args) {
         clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
+        timeout = setTimeout(() => fn.apply(this, args), wait);
       };
     };
 
-    // Generate 100 workers with diverse data
+    // ---- generate worker data ----
     const generateWorkers = () => {
       const tribes = ['Luhya', 'Kikuyu', 'Luo', 'Kamba', 'Meru', 'Kisii', 'Mijikenda', 'Taita', 'Turkana', 'Maasai'];
       const locations = ['Nairobi', 'Kiambu', 'Thika', 'Nakuru', 'Eldoret', 'Kisumu', 'Mombasa', 'Machakos', 'Kajiado', 'Ruiru'];
@@ -833,10 +740,9 @@
       const experience = ['1-2 Years', '3-5 Years', '5+ Years', '2-3 Years', '7+ Years'];
       const salaries = ['KES 8,000', 'KES 10,000', 'KES 12,000', 'KES 15,000', 'KES 18,000', 'KES 20,000'];
       const languages = ['English & Kiswahili', 'English & Kikuyu', 'English & Luo', 'English & Luhya', 'English, Kiswahili & Kikuyu', 'English, Kiswahili & Luo'];
-      
       const names = [
-        'Grace Akinyi', 'Mary Wanjiru', 'Sarah Kemunto', 'Jane Nyambura', 
-        'Faith Achieng', 'Esther Muthoni', 'Ruth Akoth', 'Margaret Wambui', 
+        'Grace Akinyi', 'Mary Wanjiru', 'Sarah Kemunto', 'Jane Nyambura',
+        'Faith Achieng', 'Esther Muthoni', 'Ruth Akoth', 'Margaret Wambui',
         'Anne Akinyi', 'Susan Mueni', 'Catherine Chepkirui', 'Helen Wanjiru',
         'Rose Auma', 'Mercy Mwende', 'Joyce Muthoni', 'Lydia Akinyi',
         'Patricia Kamene', 'Diana Chebet', 'Monica Kemunto', 'Christine Naliaka',
@@ -851,15 +757,15 @@
         const location = locations[i % locations.length];
         workers.push({
           id: i,
-          name: name,
+          name,
           status: i % 8 === 0 ? 'On Leave' : 'Available',
-          tribe: tribe,
+          tribe,
           religion: religions[i % religions.length],
           age: 25 + (i % 20),
           education: education[i % education.length],
           language: languages[i % languages.length],
           experience: experience[i % experience.length],
-          location: location,
+          location,
           salary: salaries[i % salaries.length],
           contact: `07${Math.floor(10000000 + Math.random() * 90000000)}`,
           email: `${name.toLowerCase().replace(' ', '.')}@falcare.co.ke`,
@@ -882,115 +788,113 @@
     const SLIDES = generateWorkers();
     const AUTOPLAY_DELAY = 4000;
 
+    // ---- main slider class ----
     class Slider {
       constructor() {
+        // state
         this.current = 0;
         this.animating = false;
         this.total = SLIDES.length;
-        this.el = document.querySelector(".slider");
-        this.titleEl = document.querySelector(".slider__title");
-        this.imagesEl = document.querySelector(".slider__images");
-        this.slideEls = [];
-        this.currentLine = null;
-        this.autoPlayId = null;
-        this.reducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
+        this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // DOM refs
+        this.el = document.querySelector('.slider');
+        this.titleEl = document.querySelector('.slider__title');
+        this.imagesContainer = document.getElementById('imagesContainer');
         this.currentCountEl = document.getElementById('currentCount');
         this.totalCountEl = document.getElementById('totalCount');
         this.scrollIndicator = document.getElementById('scrollIndicator');
 
-        // Menu elements
+        // slide cache
+        this.slideEls = [];
+        this.currentLine = null;
+
+        // autoplay
+        this.autoPlayId = null;
+
+        // scroll state
+        this.scrollAccumulator = 0;
+        this.scrollThreshold = 80;
+        this.scrollCooldown = false;
+
+        // touch state (for swipe detection)
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.touchMoved = false;
+        this.swipeAccumulator = 0;
+
+        // menu
         this.menuBtn = document.getElementById('menuBtn');
         this.mobileMenu = document.getElementById('mobileMenu');
         this.menuOverlay = document.getElementById('menuOverlay');
         this.isMenuOpen = false;
 
-        // Details page elements
+        // details
         this.detailsOverlay = document.getElementById('detailsOverlay');
         this.detailsBody = document.getElementById('detailsBody');
         this.closeDetailsBtn = document.getElementById('closeDetails');
 
-        // Scroll tracking
-        this.scrollAccumulator = 0;
-        this.scrollThreshold = 80;
-        this.scrollCooldown = false;
-
-        // Touch tracking for click/tap detection
-        this.touchStartX = 0;
-        this.touchStartY = 0;
-        this.touchMoved = false;
-
-        if (this.totalCountEl) {
-          this.totalCountEl.textContent = this.total;
-        }
+        if (this.totalCountEl) this.totalCountEl.textContent = this.total;
 
         this.preload();
         this.setTitle(SLIDES[0].name);
-        const firstColor = this.getWorkerColor(SLIDES[0]);
-        gsap.set(this.el, { backgroundColor: firstColor });
+        gsap.set(this.el, { backgroundColor: this.getWorkerColor(SLIDES[0]) });
+
         this.buildCarousel();
-        this.bind();
+        this.setupEventDelegation();
+        this.setupOtherEvents();
         this.startAutoPlay();
         this.updateCounter();
+
         this.setupDetailsPage();
         this.setupMobileMenu();
 
-        // Hide scroll indicator after a few seconds
+        // hide scroll indicator after a few seconds
         setTimeout(() => {
           if (this.scrollIndicator) {
             this.scrollIndicator.style.opacity = '0';
             setTimeout(() => {
-              if (this.scrollIndicator) {
-                this.scrollIndicator.style.display = 'none';
-              }
+              if (this.scrollIndicator) this.scrollIndicator.style.display = 'none';
             }, 500);
           }
         }, 6000);
       }
 
+      // ---- helpers ----
       getWorkerColor(worker) {
-        const colors = [
-          '#2C1810', '#1a1a2e', '#16213e', '#0f3460',
-          '#1B4332', '#2d3436', '#3d2c1f', '#4a2c2c'
-        ];
+        const colors = ['#2C1810', '#1a1a2e', '#16213e', '#0f3460', '#1B4332', '#2d3436', '#3d2c1f', '#4a2c2c'];
         return colors[worker.id % colors.length];
       }
 
+      mod(n) { return ((n % this.total) + this.total) % this.total; }
+
       preload() {
-        SLIDES.forEach((s) => {
+        SLIDES.forEach(s => {
           const img = new Image();
           img.src = s.image;
-          img.onerror = () => {
-            img.src = s.fallbackImage;
-          };
+          img.onerror = () => { img.src = s.fallbackImage; };
         });
       }
 
-      mod(n) {
-        return ((n % this.total) + this.total) % this.total;
-      }
-
+      // ---- autoplay ----
       startAutoPlay() {
         this.stopAutoPlay();
         this.autoPlayId = setInterval(() => {
-          if (!this.animating) this.go("next");
+          if (!this.animating) this.go('next');
         }, AUTOPLAY_DELAY);
       }
 
       stopAutoPlay() {
-        if (this.autoPlayId) {
-          clearInterval(this.autoPlayId);
-          this.autoPlayId = null;
-        }
+        if (this.autoPlayId) { clearInterval(this.autoPlayId); this.autoPlayId = null; }
       }
 
+      // ---- title ----
       setTitle(text) {
-        this.titleEl.innerHTML = "";
-        const line = document.createElement("div");
-        [...text].forEach((ch) => {
-          const span = document.createElement("span");
-          span.textContent = ch === " " ? "\u00A0" : ch;
+        this.titleEl.innerHTML = '';
+        const line = document.createElement('div');
+        [...text].forEach(ch => {
+          const span = document.createElement('span');
+          span.textContent = ch === ' ' ? '\u00A0' : ch;
           line.appendChild(span);
         });
         this.titleEl.appendChild(line);
@@ -999,28 +903,28 @@
 
       animateTitle(newText, direction) {
         const h = this.titleEl.offsetHeight;
-        const dir = direction === "next" ? 1 : -1;
+        const dir = direction === 'next' ? 1 : -1;
         const oldLine = this.currentLine;
-        const oldChars = [...oldLine.querySelectorAll("span")];
+        const oldChars = [...oldLine.querySelectorAll('span')];
 
         if (h === 0) {
           this.setTitle(newText);
           return gsap.timeline();
         }
 
-        this.titleEl.style.height = h + "px";
-        oldLine.style.cssText = "position:absolute;top:0;left:0;width:100%";
+        this.titleEl.style.height = h + 'px';
+        oldLine.style.cssText = 'position:absolute;top:0;left:0;width:100%';
 
-        const newLine = document.createElement("div");
-        newLine.style.cssText = "position:absolute;top:0;left:0;width:100%";
-        [...newText].forEach((ch) => {
-          const span = document.createElement("span");
-          span.textContent = ch === " " ? "\u00A0" : ch;
+        const newLine = document.createElement('div');
+        newLine.style.cssText = 'position:absolute;top:0;left:0;width:100%';
+        [...newText].forEach(ch => {
+          const span = document.createElement('span');
+          span.textContent = ch === ' ' ? '\u00A0' : ch;
           newLine.appendChild(span);
         });
         this.titleEl.appendChild(newLine);
 
-        const newChars = [...newLine.querySelectorAll("span")];
+        const newChars = [...newLine.querySelectorAll('span')];
         gsap.set(newChars, { y: h * dir });
 
         const duration = this.reducedMotion ? 0.01 : 1;
@@ -1029,58 +933,35 @@
         const tl = gsap.timeline({
           onComplete: () => {
             oldLine.remove();
-            newLine.style.cssText = "";
-            gsap.set(newChars, { clearProps: "all" });
-            this.titleEl.style.height = "";
+            newLine.style.cssText = '';
+            gsap.set(newChars, { clearProps: 'all' });
+            this.titleEl.style.height = '';
             this.currentLine = newLine;
           }
         });
 
-        tl.to(
-          oldChars,
-          {
-            y: -h * dir,
-            stagger: stagger,
-            duration: duration,
-            ease: "expo.inOut"
-          },
-          0
-        );
-
-        tl.to(
-          newChars,
-          {
-            y: 0,
-            stagger: stagger,
-            duration: duration,
-            ease: "expo.inOut"
-          },
-          0
-        );
-
+        tl.to(oldChars, { y: -h * dir, stagger, duration, ease: 'expo.inOut' }, 0);
+        tl.to(newChars, { y: 0, stagger, duration, ease: 'expo.inOut' }, 0);
         return tl;
       }
 
-      makeSlide(idx) {
-        const worker = SLIDES[idx];
-        const div = document.createElement("div");
-        div.className = "slider__slide";
+      // ---- create slide DOM (reused) ----
+      createSlideElement(worker) {
+        const div = document.createElement('div');
+        div.className = 'slider__slide';
         div.dataset.workerId = worker.id;
-        
-        const img = document.createElement("img");
+
+        const img = document.createElement('img');
         img.src = worker.image;
         img.alt = worker.name;
         img.width = 600;
         img.height = 800;
         img.draggable = false;
-        img.onerror = () => {
-          img.src = worker.fallbackImage;
-        };
+        img.onerror = () => { img.src = worker.fallbackImage; };
         div.appendChild(img);
 
-        // Worker details overlay
-        const overlay = document.createElement("div");
-        overlay.className = "worker-details-overlay";
+        const overlay = document.createElement('div');
+        overlay.className = 'worker-details-overlay';
         overlay.innerHTML = `
           <div class="name">${worker.name}</div>
           <div class="detail-row">
@@ -1095,34 +976,46 @@
         `;
         div.appendChild(overlay);
 
-        // Book button
-        const bookBtn = document.createElement("a");
-        bookBtn.className = "book-btn";
-        bookBtn.textContent = "Book Now";
-        bookBtn.href = "#";
-        bookBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          this.showDetails(worker.id);
-        });
+        const bookBtn = document.createElement('a');
+        bookBtn.className = 'book-btn';
+        bookBtn.textContent = 'Book Now';
+        bookBtn.href = '#';
+        bookBtn.dataset.workerId = worker.id;
         div.appendChild(bookBtn);
-
-        // Click/tap on slide opens details
-        div.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          // Only trigger if not a drag/swipe
-          if (!this.touchMoved) {
-            this.showDetails(worker.id);
-          }
-          this.touchMoved = false;
-        });
 
         return div;
       }
 
+      // ---- update slide content (reuse DOM) ----
+      updateSlideContent(slideEl, worker) {
+        slideEl.dataset.workerId = worker.id;
+
+        const img = slideEl.querySelector('img');
+        img.src = worker.image;
+        img.alt = worker.name;
+        img.onerror = () => { img.src = worker.fallbackImage; };
+
+        const overlay = slideEl.querySelector('.worker-details-overlay');
+        overlay.innerHTML = `
+          <div class="name">${worker.name}</div>
+          <div class="detail-row">
+            <span>${worker.tribe}</span>
+            <span>${worker.age} yrs</span>
+            <span>${worker.location}</span>
+          </div>
+          <div class="detail-row">
+            <span>${worker.experience}</span>
+            <span>${worker.salary}</span>
+          </div>
+        `;
+
+        const bookBtn = slideEl.querySelector('.book-btn');
+        bookBtn.dataset.workerId = worker.id;
+      }
+
+      // ---- carousel positioning ----
       getSlideProps(step) {
-        const h = this.imagesEl.offsetHeight || window.innerHeight * 0.6;
+        const h = this.imagesContainer.offsetHeight || window.innerHeight * 0.6;
         const absStep = Math.abs(step);
         const positions = [
           { x: -0.35, y: -0.95, rot: -30, s: 1.35, b: 16, o: 0 },
@@ -1133,7 +1026,6 @@
         ];
         const idx = Math.max(0, Math.min(4, step + 2));
         const p = positions[idx];
-
         return {
           x: p.x * h,
           y: p.y * h,
@@ -1155,86 +1047,77 @@
           rotation: props.rotation,
           scale: props.scale,
           opacity: props.opacity,
-          filter: "blur(" + props.blur + "px)",
+          filter: `blur(${props.blur}px)`,
           zIndex: props.zIndex
         });
       }
 
+      // ---- build carousel with recycled elements ----
       buildCarousel() {
-        if (!this.imagesEl || this.imagesEl.offsetHeight === 0) return;
-        this.imagesEl.innerHTML = "";
+        if (!this.imagesContainer || this.imagesContainer.offsetHeight === 0) return;
+
+        // Clear container
+        this.imagesContainer.innerHTML = '';
         this.slideEls = [];
 
-        for (let step = -1; step <= 1; step++) {
+        // Create 5 slides (steps -2, -1, 0, 1, 2)
+        for (let step = -2; step <= 2; step++) {
           const idx = this.mod(this.current + step);
-          const slide = this.makeSlide(idx);
-          this.imagesEl.appendChild(slide);
+          const worker = SLIDES[idx];
+          const slide = this.createSlideElement(worker);
+          this.imagesContainer.appendChild(slide);
           this.positionSlide(slide, step);
-          this.slideEls.push({ el: slide, step: step });
+          this.slideEls.push({ el: slide, step, idx });
         }
       }
 
+      // ---- animate carousel by reusing existing elements ----
       animateCarousel(direction) {
-        if (!this.imagesEl || this.imagesEl.offsetHeight === 0)
+        if (!this.imagesContainer || this.imagesContainer.offsetHeight === 0)
           return gsap.timeline();
 
-        const shift = direction === "next" ? -1 : 1;
-        const enterStep = direction === "next" ? 2 : -2;
-        const newIdx =
-          direction === "next"
-            ? this.mod(this.current + 2)
-            : this.mod(this.current - 2);
+        const shift = direction === 'next' ? -1 : 1;
 
-        const newSlide = this.makeSlide(newIdx);
-        this.imagesEl.appendChild(newSlide);
-        this.positionSlide(newSlide, enterStep);
-        this.slideEls.push({ el: newSlide, step: enterStep });
-
-        this.slideEls.forEach((s) => {
+        // Update the data for each slide
+        this.slideEls.forEach(s => {
           s.step += shift;
+          // If a slide goes out of range (-3 or 3), wrap it to the other side
+          if (s.step > 2) {
+            s.step = -2;
+          } else if (s.step < -2) {
+            s.step = 2;
+          }
+          // Update the worker data for this slide
+          const newIdx = this.mod(this.current + s.step);
+          s.idx = newIdx;
+          this.updateSlideContent(s.el, SLIDES[newIdx]);
         });
 
         const duration = this.reducedMotion ? 0.01 : 1.2;
 
-        const tl = gsap.timeline({
-          onComplete: () => {
-            this.slideEls = this.slideEls.filter((s) => {
-              if (Math.abs(s.step) >= 2) {
-                s.el.remove();
-                return false;
-              }
-              return true;
-            });
-          }
-        });
+        const tl = gsap.timeline();
 
-        this.slideEls.forEach((s) => {
+        this.slideEls.forEach(s => {
           const props = this.getSlideProps(s.step);
           s.el.style.zIndex = props.zIndex;
-
-          tl.to(
-            s.el,
-            {
-              x: props.x,
-              y: props.y,
-              rotation: props.rotation,
-              scale: props.scale,
-              opacity: props.opacity,
-              filter: "blur(" + props.blur + "px)",
-              duration: duration,
-              ease: "power3.inOut"
-            },
-            0
-          );
+          tl.to(s.el, {
+            x: props.x,
+            y: props.y,
+            rotation: props.rotation,
+            scale: props.scale,
+            opacity: props.opacity,
+            filter: `blur(${props.blur}px)`,
+            duration,
+            ease: 'power3.inOut'
+          }, 0);
         });
 
         return tl;
       }
 
+      // ---- navigation ----
       updateCounter() {
-        if (this.currentCountEl) {
-          this.currentCountEl.textContent = this.current + 1;
-        }
+        if (this.currentCountEl) this.currentCountEl.textContent = this.current + 1;
       }
 
       go(direction) {
@@ -1242,10 +1125,7 @@
         this.animating = true;
         this.startAutoPlay();
 
-        const nextIdx =
-          direction === "next"
-            ? this.mod(this.current + 1)
-            : this.mod(this.current - 1);
+        const nextIdx = direction === 'next' ? this.mod(this.current + 1) : this.mod(this.current - 1);
 
         const master = gsap.timeline({
           onComplete: () => {
@@ -1256,46 +1136,208 @@
         });
 
         const nextColor = this.getWorkerColor(SLIDES[nextIdx]);
-        master.to(
-          this.el,
-          {
-            backgroundColor: nextColor,
-            duration: this.reducedMotion ? 0.01 : 1.2,
-            ease: "power2.inOut"
-          },
-          0
-        );
+        master.to(this.el, {
+          backgroundColor: nextColor,
+          duration: this.reducedMotion ? 0.01 : 1.2,
+          ease: 'power2.inOut'
+        }, 0);
 
         master.add(this.animateTitle(SLIDES[nextIdx].name, direction), 0);
         master.add(this.animateCarousel(direction), 0);
       }
 
-      // ===== MOBILE MENU =====
-      setupMobileMenu() {
-        this.menuBtn.addEventListener('click', () => {
-          this.toggleMenu();
+      // ---- EVENT DELEGATION (the key improvement) ----
+      setupEventDelegation() {
+        // Single click listener on the container
+        this.imagesContainer.addEventListener('click', (e) => {
+          // Find the slide that was clicked
+          const slide = e.target.closest('.slider__slide');
+          if (!slide) return;
+
+          // If the click was on the book button, handle it separately
+          const bookBtn = e.target.closest('.book-btn');
+          if (bookBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const workerId = parseInt(bookBtn.dataset.workerId, 10);
+            if (!isNaN(workerId)) {
+              this.showDetails(workerId);
+            }
+            return;
+          }
+
+          // If this was a swipe, ignore the click
+          if (this.touchMoved) {
+            this.touchMoved = false;
+            return;
+          }
+
+          // Open details for the worker
+          const workerId = parseInt(slide.dataset.workerId, 10);
+          if (!isNaN(workerId)) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.showDetails(workerId);
+          }
         });
 
-        this.menuOverlay.addEventListener('click', () => {
-          this.closeMenu();
+        // Touch events for swipe detection (single listener on container)
+        this.imagesContainer.addEventListener('touchstart', (e) => {
+          const touch = e.touches[0];
+          this.touchStartX = touch.clientX;
+          this.touchStartY = touch.clientY;
+          this.touchMoved = false;
+          this.swipeAccumulator = 0;
+        }, { passive: true });
+
+        this.imagesContainer.addEventListener('touchmove', (e) => {
+          const touch = e.touches[0];
+          const dx = touch.clientX - this.touchStartX;
+          const dy = touch.clientY - this.touchStartY;
+
+          if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+            this.touchMoved = true;
+          }
+
+          // Vertical swipe for navigation
+          if (Math.abs(dy) > 30 && Math.abs(dy) > Math.abs(dx) * 1.5) {
+            const delta = this.touchStartY - touch.clientY;
+            this.swipeAccumulator += delta;
+            this.touchStartY = touch.clientY;
+
+            if (!this.animating) {
+              if (this.swipeAccumulator > 40) {
+                this.swipeAccumulator = 0;
+                this.go('next');
+              } else if (this.swipeAccumulator < -40) {
+                this.swipeAccumulator = 0;
+                this.go('prev');
+              }
+            }
+          }
+        }, { passive: true });
+
+        this.imagesContainer.addEventListener('touchend', () => {
+          // Reset touch moved flag after a short delay
+          setTimeout(() => {
+            this.touchMoved = false;
+          }, 100);
+        }, { passive: true });
+      }
+
+      // ---- other events (wheel, keyboard, resize, visibility) ----
+      setupOtherEvents() {
+        // Mouse wheel
+        window.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          this.handleScroll(e.deltaY);
+        }, { passive: false });
+
+        // Keyboard
+        window.addEventListener('keydown', (e) => {
+          if (this.animating) return;
+          if (e.key === 'ArrowDown' || e.key === 'ArrowRight') this.go('next');
+          if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') this.go('prev');
         });
 
-        this.mobileMenu.querySelectorAll('.menu-item, .menu-highlight').forEach(link => {
-          link.addEventListener('click', () => {
-            this.closeMenu();
-          });
-        });
+        // Resize
+        const onResize = debounce(() => {
+          if (!this.animating && this.imagesContainer.offsetHeight > 0) {
+            this.slideEls.forEach(s => this.positionSlide(s.el, s.step));
+          }
+        }, 300);
+        window.addEventListener('resize', onResize, { passive: true });
 
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && this.isMenuOpen) {
-            this.closeMenu();
+        // Visibility change
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'hidden') {
+            this.animating = false;
+            this.stopAutoPlay();
+          } else {
+            this.startAutoPlay();
           }
         });
       }
 
-      toggleMenu() {
-        this.isMenuOpen ? this.closeMenu() : this.openMenu();
+      handleScroll(deltaY) {
+        if (this.animating || this.scrollCooldown) return;
+        this.scrollAccumulator += deltaY;
+        if (Math.abs(this.scrollAccumulator) >= this.scrollThreshold) {
+          const direction = this.scrollAccumulator > 0 ? 'next' : 'prev';
+          this.scrollAccumulator = 0;
+          this.scrollCooldown = true;
+          this.go(direction);
+          setTimeout(() => { this.scrollCooldown = false; }, 1000);
+        }
       }
+
+      // ---- details page ----
+      setupDetailsPage() {
+        this.closeDetailsBtn.addEventListener('click', () => this.hideDetails());
+        this.detailsOverlay.addEventListener('click', (e) => {
+          if (e.target === this.detailsOverlay) this.hideDetails();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.detailsOverlay.classList.contains('active')) {
+            this.hideDetails();
+          }
+        });
+      }
+
+      showDetails(workerId) {
+        const worker = SLIDES.find(w => w.id === workerId);
+        if (!worker) return;
+
+        this.detailsBody.innerHTML = `
+          <div class="details-image">
+            <img src="${worker.image}" alt="${worker.name}" onerror="this.src='${worker.fallbackImage}'">
+          </div>
+          <div class="details-info">
+            <span class="worker-id-badge">Maid ${worker.id}</span>
+            <div class="worker-name">${worker.name}</div>
+            <span class="status-badge">${worker.status}</span>
+            <div class="details-grid">
+              <div class="detail-item"><span class="label">Tribe</span><span class="value">${worker.tribe}</span></div>
+              <div class="detail-item"><span class="label">Religion</span><span class="value">${worker.religion}</span></div>
+              <div class="detail-item"><span class="label">Age</span><span class="value">${worker.age} years</span></div>
+              <div class="detail-item"><span class="label">Education</span><span class="value">${worker.education}</span></div>
+              <div class="detail-item"><span class="label">Languages</span><span class="value">${worker.language}</span></div>
+              <div class="detail-item"><span class="label">Experience</span><span class="value">${worker.experience}</span></div>
+              <div class="detail-item"><span class="label">Location</span><span class="value">${worker.location}</span></div>
+              <div class="detail-item"><span class="label">Salary</span><span class="value">${worker.salary}</span></div>
+              <div class="detail-item"><span class="label">Contact</span><span class="value">${worker.contact}</span></div>
+              <div class="detail-item"><span class="label">Email</span><span class="value">${worker.email}</span></div>
+            </div>
+            <button class="details-book-btn" onclick="alert('Booking request sent for ${worker.name} (ID: ${worker.id})')">
+              Book This Worker
+            </button>
+          </div>
+        `;
+
+        this.detailsOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        this.stopAutoPlay();
+      }
+
+      hideDetails() {
+        this.detailsOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        this.startAutoPlay();
+      }
+
+      // ---- mobile menu ----
+      setupMobileMenu() {
+        this.menuBtn.addEventListener('click', () => this.toggleMenu());
+        this.menuOverlay.addEventListener('click', () => this.closeMenu());
+        this.mobileMenu.querySelectorAll('.menu-item, .menu-highlight').forEach(link => {
+          link.addEventListener('click', () => this.closeMenu());
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.isMenuOpen) this.closeMenu();
+        });
+      }
+
+      toggleMenu() { this.isMenuOpen ? this.closeMenu() : this.openMenu(); }
 
       openMenu() {
         this.isMenuOpen = true;
@@ -1312,190 +1354,10 @@
         this.menuBtn.classList.remove('active');
         document.body.style.overflow = '';
       }
-
-      // ===== DETAILS PAGE METHODS =====
-      setupDetailsPage() {
-        this.closeDetailsBtn.addEventListener('click', () => {
-          this.hideDetails();
-        });
-
-        this.detailsOverlay.addEventListener('click', (e) => {
-          if (e.target === this.detailsOverlay) {
-            this.hideDetails();
-          }
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && this.detailsOverlay.classList.contains('active')) {
-            this.hideDetails();
-          }
-        });
-      }
-
-      showDetails(workerId) {
-        const worker = SLIDES.find(w => w.id === workerId);
-        if (!worker) return;
-
-        // Build details content - matching the image design
-        this.detailsBody.innerHTML = `
-          <div class="details-image">
-            <img src="${worker.image}" alt="${worker.name}" onerror="this.src='${worker.fallbackImage}'">
-          </div>
-          <div class="details-info">
-            <span class="worker-id-badge">Maid ${worker.id}</span>
-            <div class="worker-name">${worker.name}</div>
-            <span class="status-badge">${worker.status}</span>
-            <div class="details-grid">
-              <div class="detail-item">
-                <span class="label">Tribe</span>
-                <span class="value">${worker.tribe}</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Religion</span>
-                <span class="value">${worker.religion}</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Age</span>
-                <span class="value">${worker.age} years</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Education</span>
-                <span class="value">${worker.education}</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Languages</span>
-                <span class="value">${worker.language}</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Experience</span>
-                <span class="value">${worker.experience}</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Location</span>
-                <span class="value">${worker.location}</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Salary</span>
-                <span class="value">${worker.salary}</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Contact</span>
-                <span class="value">${worker.contact}</span>
-              </div>
-              <div class="detail-item">
-                <span class="label">Email</span>
-                <span class="value">${worker.email}</span>
-              </div>
-            </div>
-            <button class="details-book-btn" onclick="alert('Booking request sent for ${worker.name} (ID: ${worker.id})')">
-              Book This Worker
-            </button>
-          </div>
-        `;
-
-        this.detailsOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        // Stop autoplay when details are open
-        this.stopAutoPlay();
-      }
-
-      hideDetails() {
-        this.detailsOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-        // Resume autoplay
-        this.startAutoPlay();
-      }
-
-      // ===== SCROLL HANDLING =====
-      handleScroll(deltaY) {
-        if (this.animating || this.scrollCooldown) return;
-        
-        this.scrollAccumulator += deltaY;
-        
-        if (Math.abs(this.scrollAccumulator) >= this.scrollThreshold) {
-          const direction = this.scrollAccumulator > 0 ? 'next' : 'prev';
-          this.scrollAccumulator = 0;
-          this.scrollCooldown = true;
-          
-          this.go(direction);
-          
-          setTimeout(() => {
-            this.scrollCooldown = false;
-          }, 1000);
-        }
-      }
-
-      bind() {
-        // Wheel scroll
-        const onWheel = (e) => {
-          e.preventDefault();
-          this.handleScroll(e.deltaY);
-        };
-        window.addEventListener("wheel", onWheel, { passive: false });
-
-        // Touch handling - separate swipe from tap
-        let touchStartY = 0;
-        let touchAccumulator = 0;
-        
-        window.addEventListener(
-          "touchstart",
-          (e) => {
-            this.touchStartX = e.touches[0].clientX;
-            this.touchStartY = e.touches[0].clientY;
-            this.touchMoved = false;
-            touchAccumulator = 0;
-          },
-          { passive: true }
-        );
-
-        const onTouchMove = (e) => {
-          const deltaX = Math.abs(e.touches[0].clientX - this.touchStartX);
-          const deltaY = Math.abs(e.touches[0].clientY - this.touchStartY);
-          
-          if (deltaX > 10 || deltaY > 10) {
-            this.touchMoved = true;
-          }
-          
-          const deltaYScroll = this.touchStartY - e.touches[0].clientY;
-          touchAccumulator += deltaYScroll;
-          this.touchStartY = e.touches[0].clientY;
-          
-          if (Math.abs(touchAccumulator) >= this.scrollThreshold * 0.5 && !this.animating) {
-            const direction = touchAccumulator > 0 ? 'next' : 'prev';
-            touchAccumulator = 0;
-            this.go(direction);
-          }
-        };
-        window.addEventListener("touchmove", onTouchMove, { passive: true });
-
-        // Keyboard navigation
-        window.addEventListener("keydown", (e) => {
-          if (this.animating) return;
-          if (e.key === "ArrowDown" || e.key === "ArrowRight") this.go("next");
-          if (e.key === "ArrowUp" || e.key === "ArrowLeft") this.go("prev");
-        });
-
-        const onResize = debounce(() => {
-          if (!this.animating && this.imagesEl.offsetHeight > 0) {
-            this.slideEls.forEach((s) => {
-              this.positionSlide(s.el, s.step);
-            });
-          }
-        }, 300);
-        window.addEventListener("resize", onResize, { passive: true });
-
-        document.addEventListener("visibilitychange", () => {
-          if (document.visibilityState === "hidden") {
-            this.animating = false;
-            this.stopAutoPlay();
-          } else {
-            this.startAutoPlay();
-          }
-        });
-      }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    // ---- boot ----
+    document.addEventListener('DOMContentLoaded', () => {
       new Slider();
     });
   </script>
